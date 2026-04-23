@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline' https://fonts.bunny.net; font-src https://fonts.bunny.net; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>AI Readiness Assessment — Nordglade</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+<link href="https://fonts.bunny.net/css?family=inter-tight:300,400,500,600,700|ibm-plex-mono:300,400,500|ibm-plex-serif:400,400i,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF7;
+    --ink:#141414;
+    --ink-2:#2B2B2A;
+    --ink-3:#5A5A57;
+    --ink-4:#8C8C87;
+    --rule:#D9D8D2;
+    --rule-2:#ECEBE5;
+    --accent:#2F4A3A;
+    --accent-soft:#2F4A3A14;
+    --accent-line:#2F4A3A;
+    --page-w:210mm;
+    --page-h:297mm;
+    --margin-x:22mm;
+    --margin-y:22mm;
+    --sans:"Inter Tight", -apple-system, system-ui, sans-serif;
+    --serif:"IBM Plex Serif", Georgia, serif;
+    --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:#E8E7E1;
+    font-family:var(--sans);
+    color:var(--ink);
+    font-size:10.5pt;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    font-feature-settings:"ss01","cv01","cv11";
+  }
+
+  /* ——— screen chrome ——— */
+  .viewer{
+    padding:40px 24px 120px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:24px;
+  }
+  .toolbar{
+    position:fixed;
+    top:16px;
+    right:16px;
+    z-index:50;
+    display:flex;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:11px;
+  }
+  .toolbar button{
+    background:var(--paper);
+    border:1px solid var(--rule);
+    color:var(--ink);
+    padding:9px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.02em;
+    transition:all .15s ease;
+  }
+  .toolbar button:hover{border-color:var(--ink);background:#fff}
+  .toolbar button.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .toolbar button.primary:hover{background:var(--accent);border-color:var(--accent)}
+
+  /* ——— pages ——— */
+  .page{
+    width:var(--page-w);
+    min-height:var(--page-h);
+    background:var(--paper);
+    padding:var(--margin-y) var(--margin-x);
+    position:relative;
+    box-shadow:0 1px 2px rgba(0,0,0,.04), 0 20px 40px -20px rgba(0,0,0,.08);
+    overflow:hidden;
+  }
+
+  /* ——— running header / footer ——— */
+  .rh{
+    position:absolute;
+    top:10mm;
+    left:var(--margin-x);
+    right:var(--margin-x);
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:var(--mono);
+    font-size:8.5pt;
+    color:var(--ink-4);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .rh .dot{width:3px;height:3px;background:var(--accent);border-radius:50%;display:inline-block;transform:translateY(-2px);margin:0 6px}
+  .rf{
+    position:absolute;
+    bottom:10mm;
+    left:var(--margin-x);
+    right:var(--margin-x);
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-family:var(--mono);
+    font-size:8.5pt;
+    color:var(--ink-4);
+    letter-spacing:0.04em;
+  }
+  .rf .brand{text-transform:uppercase}
+  .rf .folio{font-variant-numeric:tabular-nums}
+
+  /* ——— cover ——— */
+  .cover{
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    min-height:calc(var(--page-h) - var(--margin-y)*2);
+  }
+  .cover-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--ink-3);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .wordmark{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--sans);
+    font-weight:500;
+    font-size:11pt;
+    letter-spacing:-0.01em;
+    text-transform:none;
+    color:var(--ink);
+  }
+  .wordmark-dot{
+    width:10px;height:10px;
+    border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+  }
+
+  .cover-mid{
+    align-self:end;
+    padding-bottom:28mm;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:9pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:24mm;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:24px;height:1px;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .cover-title{
+    font-family:var(--sans);
+    font-weight:300;
+    font-size:58pt;
+    line-height:0.98;
+    letter-spacing:-0.035em;
+    color:var(--ink);
+    margin:0 0 10mm;
+    max-width:16ch;
+  }
+  .cover-title em{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+    letter-spacing:-0.02em;
+  }
+  .cover-thesis{
+    font-family:var(--serif);
+    font-size:14pt;
+    line-height:1.45;
+    color:var(--ink-2);
+    max-width:48ch;
+    margin:0;
+    font-weight:400;
+  }
+
+  .cover-bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:24px;
+    align-items:end;
+    padding-top:12mm;
+    border-top:1px solid var(--rule);
+  }
+  .meta{
+    font-family:var(--mono);
+    font-size:8.5pt;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+    line-height:1.8;
+  }
+  .meta .k{color:var(--ink-4);display:block;margin-bottom:4px;font-size:7.5pt}
+  .meta .v{color:var(--ink);font-size:9pt;text-transform:none;letter-spacing:0}
+
+  /* ——— general type ——— */
+  h1,h2,h3,h4{margin:0;font-weight:500;letter-spacing:-0.02em}
+  p{margin:0}
+
+  .page-title{
+    font-family:var(--sans);
+    font-weight:400;
+    font-size:26pt;
+    line-height:1.05;
+    letter-spacing:-0.025em;
+    margin:0 0 4mm;
+    max-width:26ch;
+  }
+  .page-title em{
+    font-family:var(--serif);
+    font-style:italic;
+    font-weight:400;
+  }
+  .lede{
+    font-family:var(--serif);
+    font-size:13pt;
+    line-height:1.5;
+    color:var(--ink-2);
+    max-width:54ch;
+    font-weight:400;
+  }
+  .lede + .lede{margin-top:5mm}
+
+  .section-label{
+    font-family:var(--mono);
+    font-size:8.5pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-4);
+  }
+  .section-label .num{color:var(--accent);margin-right:8px}
+
+  .hr{
+    border:0;
+    border-top:1px solid var(--rule);
+    margin:10mm 0;
+  }
+  .hr-thin{
+    border:0;
+    border-top:1px solid var(--rule-2);
+    margin:6mm 0;
+  }
+
+  /* ——— intro page ——— */
+  .intro-grid{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:24px;
+    padding:8mm 0;
+    border-top:1px solid var(--rule);
+  }
+  .intro-grid:last-of-type{border-bottom:1px solid var(--rule)}
+  .intro-grid .k{
+    font-family:var(--mono);
+    font-size:8.5pt;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-4);
+    padding-top:3px;
+  }
+  .intro-grid .v{
+    font-family:var(--sans);
+    font-size:11pt;
+    color:var(--ink);
+    line-height:1.5;
+  }
+
+  /* ——— dimension pages ——— */
+  .dim-head{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:end;
+    gap:24px;
+    padding-bottom:4mm;
+    border-bottom:1px solid var(--ink);
+    margin-bottom:8mm;
+  }
+  .dim-head .left{display:flex;flex-direction:column;gap:8px}
+  .dim-number{
+    font-family:var(--mono);
+    font-size:9pt;
+    letter-spacing:0.1em;
+    color:var(--ink-4);
+    text-transform:uppercase;
+  }
+  .dim-number .sep{color:var(--rule);margin:0 6px}
+  .dim-title{
+    font-family:var(--sans);
+    font-weight:400;
+    font-size:30pt;
+    line-height:1;
+    letter-spacing:-0.03em;
+  }
+  .dim-max{
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--ink-4);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .dim-max .cur{color:var(--accent);font-variant-numeric:tabular-nums;font-weight:500}
+
+  .epigraph{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:12pt;
+    line-height:1.5;
+    color:var(--ink-2);
+    max-width:58ch;
+    padding:0 0 0 12px;
+    border-left:1px solid var(--accent);
+    margin:0 0 10mm;
+  }
+  .epigraph.plain{
+    font-style:normal;
+    color:var(--ink-2);
+    font-family:var(--serif);
+  }
+
+  /* ——— question ——— */
+  .q{
+    padding:6mm 0;
+    border-top:1px solid var(--rule-2);
+  }
+  .q:first-of-type{border-top:0;padding-top:2mm}
+  .q-head{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:10px;
+    align-items:baseline;
+    margin-bottom:4mm;
+  }
+  .q-num{
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--ink-4);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:0.04em;
+  }
+  .q-text{
+    font-family:var(--sans);
+    font-size:11.5pt;
+    line-height:1.4;
+    color:var(--ink);
+    font-weight:500;
+    letter-spacing:-0.005em;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    margin-left:38px;
+  }
+  .opt{
+    display:grid;
+    grid-template-columns:18px 1fr auto;
+    align-items:baseline;
+    gap:10px;
+    padding:8px 12px 8px 10px;
+    margin:0 -12px;
+    border-radius:3px;
+    cursor:pointer;
+    transition:background .12s ease;
+    user-select:none;
+    position:relative;
+  }
+  .opt:hover{background:var(--rule-2)}
+  .opt .mark{
+    width:12px;height:12px;
+    border:1px solid var(--ink-4);
+    border-radius:50%;
+    display:inline-block;
+    transform:translateY(2px);
+    transition:all .15s ease;
+    position:relative;
+    flex-shrink:0;
+  }
+  .opt .mark::after{
+    content:"";
+    position:absolute;
+    inset:2px;
+    border-radius:50%;
+    background:var(--accent);
+    transform:scale(0);
+    transition:transform .15s ease;
+  }
+  .opt.selected{background:var(--accent-soft)}
+  .opt.selected .mark{border-color:var(--accent)}
+  .opt.selected .mark::after{transform:scale(1)}
+  .opt-label{
+    font-family:var(--sans);
+    font-size:10.5pt;
+    line-height:1.45;
+    color:var(--ink-2);
+  }
+  .opt.selected .opt-label{color:var(--ink)}
+  .opt-pts{
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--ink-4);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+  }
+  .opt.selected .opt-pts{color:var(--accent);font-weight:500}
+
+  .dim-total{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:baseline;
+    padding:6mm 0 0;
+    border-top:1px solid var(--ink);
+    margin-top:6mm;
+  }
+  .dim-total .lbl{
+    font-family:var(--mono);
+    font-size:9pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+  }
+  .dim-total .val{
+    font-family:var(--serif);
+    font-size:22pt;
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .dim-total .val .slash{color:var(--ink-4);margin:0 4px;font-family:var(--mono);font-size:12pt}
+  .dim-total .val .max{color:var(--ink-4);font-size:14pt;font-family:var(--mono)}
+
+  /* ——— callouts ——— */
+  .callout{
+    padding:5mm 0 0;
+    margin-top:5mm;
+    border-top:1px dashed var(--rule);
+    font-family:var(--serif);
+    font-size:10pt;
+    line-height:1.55;
+    color:var(--ink-3);
+  }
+  .callout .tag{
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:4px;
+  }
+
+  /* ——— results page ——— */
+  .results-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14mm;
+    align-items:start;
+    padding-top:6mm;
+  }
+  .score-table{
+    width:100%;
+    border-collapse:collapse;
+    font-family:var(--sans);
+  }
+  .score-table th{
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-4);
+    text-align:left;
+    padding:0 0 4mm;
+    border-bottom:1px solid var(--ink);
+    font-weight:400;
+  }
+  .score-table th:last-child{text-align:right}
+  .score-table td{
+    padding:3.2mm 0;
+    border-bottom:1px solid var(--rule-2);
+    font-size:10.5pt;
+    color:var(--ink);
+    vertical-align:middle;
+  }
+  .score-table .dim-n{
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--accent);
+    width:28px;
+    font-variant-numeric:tabular-nums;
+  }
+  .score-table .bar-cell{
+    width:80px;
+    padding-right:10px;
+  }
+  .bar{
+    height:4px;
+    background:var(--rule-2);
+    position:relative;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .bar .fill{
+    position:absolute;
+    inset:0 auto 0 0;
+    width:0;
+    background:var(--accent);
+    transition:width .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .score-table .val-cell{
+    text-align:right;
+    font-family:var(--serif);
+    font-variant-numeric:tabular-nums;
+    font-size:11.5pt;
+    white-space:nowrap;
+  }
+  .score-table .val-cell .m{color:var(--ink-4);font-family:var(--mono);font-size:9pt;margin-left:2px}
+  .score-table tr.total td{
+    border-bottom:0;
+    border-top:1px solid var(--ink);
+    padding-top:5mm;
+    font-weight:500;
+  }
+  .score-table tr.total .val-cell{font-size:20pt;letter-spacing:-0.01em}
+
+  .radar-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .radar{
+    width:100%;
+    max-width:280px;
+    aspect-ratio:1/1;
+  }
+  .radar-caption{
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--ink-4);
+    text-align:center;
+  }
+
+  /* ——— score bands ——— */
+  .bands{
+    margin-top:14mm;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+  }
+  .band{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:20px;
+    padding:7mm 0;
+    border-top:1px solid var(--rule);
+    position:relative;
+  }
+  .band:last-of-type{border-bottom:1px solid var(--rule)}
+  .band.active{background:var(--accent-soft);margin:0 -6mm;padding-left:6mm;padding-right:6mm;}
+  .band-range{
+    font-family:var(--mono);
+    font-size:10pt;
+    letter-spacing:0.04em;
+    color:var(--ink-3);
+    font-variant-numeric:tabular-nums;
+    padding-top:2px;
+  }
+  .band.active .band-range{color:var(--accent);font-weight:500}
+  .band-title{
+    font-family:var(--sans);
+    font-size:15pt;
+    font-weight:500;
+    letter-spacing:-0.015em;
+    margin-bottom:3mm;
+    line-height:1.2;
+  }
+  .band-body{
+    font-family:var(--serif);
+    font-size:10.5pt;
+    line-height:1.55;
+    color:var(--ink-2);
+    max-width:58ch;
+  }
+  .band-body p + p{margin-top:3mm}
+  .band-body ul{
+    margin:3mm 0 0;
+    padding:0;
+    list-style:none;
+  }
+  .band-body li{
+    padding:1mm 0 1mm 18px;
+    position:relative;
+    font-family:var(--sans);
+    font-size:10pt;
+    color:var(--ink-2);
+  }
+  .band-body li::before{
+    content:"";
+    position:absolute;
+    left:0;top:11px;
+    width:8px;height:1px;
+    background:var(--accent);
+  }
+  .band-body .avoid{
+    margin-top:3mm;
+    padding-top:3mm;
+    border-top:1px dashed var(--rule);
+    font-family:var(--sans);
+    font-size:10pt;
+    color:var(--ink-3);
+  }
+  .band-body .avoid .tag{
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-right:8px;
+  }
+
+  .band-active-flag{
+    display:none;
+    position:absolute;
+    top:50%;right:0;
+    transform:translateY(-50%);
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .band.active .band-active-flag{display:block}
+
+  /* ——— author's note ——— */
+  .note{
+    padding:10mm 0 0;
+  }
+  .note-title{
+    font-family:var(--sans);
+    font-weight:400;
+    font-size:22pt;
+    letter-spacing:-0.025em;
+    margin-bottom:8mm;
+  }
+  .note p{
+    font-family:var(--serif);
+    font-size:11pt;
+    line-height:1.6;
+    color:var(--ink-2);
+    max-width:58ch;
+    margin:0 0 4mm;
+  }
+  .sig{
+    margin-top:10mm;
+    padding-top:8mm;
+    border-top:1px solid var(--rule);
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:18px;
+    align-items:center;
+  }
+  .sig-mark{
+    font-family:"Brush Script MT","Segoe Script",cursive;
+    font-size:26pt;
+    color:var(--accent);
+    line-height:1;
+    padding-top:4px;
+    letter-spacing:-0.02em;
+    transform:rotate(-3deg);
+  }
+  .sig-meta{
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--ink-3);
+    letter-spacing:0.02em;
+    line-height:1.7;
+  }
+  .sig-meta .name{
+    font-family:var(--sans);
+    font-size:11pt;
+    color:var(--ink);
+    letter-spacing:-0.005em;
+    display:block;
+    margin-bottom:2px;
+    font-weight:500;
+  }
+
+  /* ——— EU AI Act note ——— */
+  .regnote{
+    margin-top:8mm;
+    padding:6mm 6mm 6mm;
+    border:1px solid var(--rule);
+    background:#F5F3ED;
+    font-family:var(--sans);
+    font-size:9.5pt;
+    line-height:1.55;
+    color:var(--ink-2);
+  }
+  .regnote .rtag{
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:3mm;
+  }
+
+  /* ——— table of contents ——— */
+  .toc{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0;
+    margin-top:8mm;
+  }
+  .toc-item{
+    display:grid;
+    grid-template-columns:32px 1fr auto auto;
+    gap:16px;
+    align-items:baseline;
+    padding:5mm 0;
+    border-top:1px solid var(--rule-2);
+    font-family:var(--sans);
+  }
+  .toc-item:first-child{border-top:1px solid var(--ink)}
+  .toc-item:last-child{border-bottom:1px solid var(--ink)}
+  .toc-n{
+    font-family:var(--mono);
+    font-size:9pt;
+    color:var(--accent);
+    font-variant-numeric:tabular-nums;
+  }
+  .toc-t{font-size:12pt;color:var(--ink);letter-spacing:-0.01em}
+  .toc-sub{font-family:var(--mono);font-size:8.5pt;color:var(--ink-4);letter-spacing:0.04em;text-transform:uppercase}
+  .toc-pg{font-family:var(--mono);font-size:9.5pt;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+  /* ——— print ——— */
+  @media print{
+    @page{
+      size:A4 portrait;
+      margin:0;
+    }
+    body{background:#fff}
+    .viewer{padding:0;gap:0;display:block}
+    .toolbar{display:none}
+    .page{
+      width:210mm;
+      height:297mm;
+      min-height:297mm;
+      box-shadow:none;
+      page-break-after:always;
+      break-after:page;
+      overflow:hidden;
+    }
+    .page:last-child{page-break-after:auto}
+    .opt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+
+  @media (max-width:900px){
+    .viewer{padding:16px 8px 80px}
+    .page{
+      width:100%;
+      max-width:560px;
+      padding:28px 24px;
+      min-height:0;
+    }
+    .cover-title{font-size:40pt}
+    .dim-title{font-size:24pt}
+    .results-grid{grid-template-columns:1fr}
+    .rh,.rf{left:24px;right:24px}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button id="btn-reset" title="Clear all answers">Reset</button>
+  <button id="btn-print" class="primary" title="Save as PDF">Save as PDF</button>
+</div>
+
+<div class="viewer">
+
+  <!-- ===================== COVER ===================== -->
+  <section class="page cover" data-screen-label="01 Cover">
+    <div class="cover-top">
+      <div class="wordmark"><span class="wordmark-dot"></span>Nordglade</div>
+    </div>
+
+    <div class="cover-mid">
+      <div class="eyebrow">A diagnostic for operators</div>
+      <h1 class="cover-title">AI Readiness <em>Assessment</em></h1>
+      <p class="cover-thesis">Where can AI actually help your operations in the next ninety days — and what needs to be true for it to work?</p>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="meta">
+        <span class="k">Prepared by</span>
+        <span class="v">Imre Bartis</span>
+      </div>
+      <div class="meta">
+        <span class="k">Series</span>
+        <span class="v">Operator Diagnostics · 01</span>
+      </div>
+      <div class="meta">
+        <span class="k">Completion</span>
+        <span class="v">≈ 10 minutes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTRO / TOC ===================== -->
+  <section class="page" data-screen-label="02 Introduction">
+    <div class="rh">
+      <span>Introduction</span>
+      <span><span class="dot"></span>AI Readiness Assessment</span>
+    </div>
+
+    <div style="padding-top:18mm">
+      <div class="section-label"><span class="num">00</span>Introduction</div>
+      <h2 class="page-title" style="margin-top:8mm">A diagnostic, <em>not a pitch.</em></h2>
+
+      <p class="lede" style="margin-top:8mm">
+        This assessment is a diagnostic, not a pitch. It's designed to answer one question: what can AI realistically do for your operations in the next 90 days, and what needs to be true for it to work?
+      </p>
+      <p class="lede">
+        Score high and you'll know what kind of engagement makes sense. Score low and you'll know exactly where to start, and what to fix before committing to anything larger.
+      </p>
+
+      <div class="intro-grid" style="margin-top:14mm">
+        <div class="k">Time</div>
+        <div class="v">Approximately 10 minutes end to end.</div>
+      </div>
+      <div class="intro-grid">
+        <div class="k">Instructions</div>
+        <div class="v">For each question, pick the option that most honestly describes where you are today, not where you'd like to be.</div>
+      </div>
+      <div class="intro-grid">
+        <div class="k">Output</div>
+        <div class="v">Six dimension scores, one total, and a band you can act on.</div>
+      </div>
+
+      <div class="section-label" style="margin-top:14mm"><span class="num">§</span>Contents</div>
+      <div class="toc" id="toc"></div>
+    </div>
+
+    <div class="rf">
+      <span class="brand">Nordglade · Operator Diagnostics</span>
+      <span class="folio">02</span>
+    </div>
+  </section>
+
+  <!-- ===================== DIMENSIONS (generated) ===================== -->
+  <div id="dimensions"></div>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="page" data-screen-label="09 Results">
+    <div class="rh">
+      <span>Results</span>
+      <span><span class="dot"></span>AI Readiness Assessment</span>
+    </div>
+
+    <div style="padding-top:18mm">
+      <div class="section-label"><span class="num">§</span>Results</div>
+      <h2 class="page-title" style="margin-top:8mm">Your <em>profile.</em></h2>
+      <p class="lede" style="margin-top:6mm;max-width:52ch">Six dimensions, one total. Fill the table as you go, or let the interactive version tally it for you.</p>
+    </div>
+
+    <div class="results-grid" style="margin-top:12mm">
+      <table class="score-table">
+        <thead>
+          <tr><th>Dim.</th><th colspan="2">Dimension</th><th>Score</th></tr>
+        </thead>
+        <tbody id="score-rows"></tbody>
+      </table>
+
+      <div class="radar-wrap">
+        <svg class="radar" id="radar" viewBox="-100 -110 200 220" aria-label="Readiness radar chart"></svg>
+        <div class="radar-caption">Shaded area = your profile</div>
+      </div>
+    </div>
+
+    <div class="rf">
+      <span class="brand">Nordglade · Operator Diagnostics</span>
+      <span class="folio">09</span>
+    </div>
+  </section>
+
+  <!-- ===================== BANDS ===================== -->
+  <section class="page" data-screen-label="10 Score bands">
+    <div class="rh">
+      <span>What your score means</span>
+      <span><span class="dot"></span>AI Readiness Assessment</span>
+    </div>
+
+    <div style="padding-top:18mm">
+      <div class="section-label"><span class="num">§</span>Interpretation</div>
+      <h2 class="page-title" style="margin-top:8mm">What your <em>score means.</em></h2>
+    </div>
+
+    <div id="bands-hint" style="display:none;margin-top:8mm;padding:4mm 5mm;border:1px dashed var(--rule);background:#F5F3ED;font-family:var(--mono);font-size:9pt;line-height:1.5;color:var(--ink-3);letter-spacing:0.02em">
+      <span style="color:var(--accent);text-transform:uppercase;margin-right:8px;letter-spacing:0.08em">Incomplete</span>
+      <span id="bands-hint-text">Answer more questions to see which band fits you.</span>
+    </div>
+
+    <div class="bands" id="bands">
+
+      <div class="band" data-range="0-25">
+        <div class="band-active-flag">Your band →</div>
+        <div class="band-range">0 – 25</div>
+        <div>
+          <div class="band-title">Start with one bounded use case.</div>
+          <div class="band-body">
+            <p>You're not ready for integrated AI systems, but you are ready for a single well-scoped automation that produces visible value in 2–4 weeks. The goal at this stage isn't to transform operations. It's to build one proof point your team can see and trust.</p>
+            <p style="margin-top:4mm;font-family:var(--sans);font-size:10pt;color:var(--ink-3)">Concrete starting points at this level:</p>
+            <ul>
+              <li>Meeting notes → structured follow-ups and action items</li>
+              <li>Inbound email triage and drafting</li>
+              <li>Document summarization for specific recurring workflows</li>
+              <li>Standardized responses to frequent customer questions</li>
+            </ul>
+            <div class="avoid"><span class="tag">Avoid</span>Buying platform tooling, running multiple pilots in parallel, or committing to ambitious integrations before the first small win lands.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="band" data-range="26-51">
+        <div class="band-active-flag">Your band →</div>
+        <div class="band-range">26 – 51</div>
+        <div>
+          <div class="band-title">Ready for targeted pilots.</div>
+          <div class="band-body">
+            <p>You have enough foundation to run focused AI work in one or two areas with measurable outcomes. The leverage here is in picking the right starting point: repeatable process, accessible data, clear stakeholder, and instrumenting it well enough to know whether it worked.</p>
+            <div class="avoid"><span class="tag">Avoid</span>Broad “AI strategy” engagements. They're slower and less convincing than one pilot that ships and shows numbers.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="band" data-range="52-75">
+        <div class="band-active-flag">Your band →</div>
+        <div class="band-range">52 – 75</div>
+        <div>
+          <div class="band-title">Ready for systematic adoption.</div>
+          <div class="band-body">
+            <p>You have the foundations to build AI into operations as an integrated layer, not as a collection of standalone tools. At this level the question shifts from “does AI help?” to “which sequence of integrations compounds fastest?”</p>
+            <p style="margin-top:4mm;font-family:var(--sans);font-size:10pt;color:var(--ink-3)">Engagements at this level typically look like:</p>
+            <ul>
+              <li>End-to-end workflow integration across two or more systems</li>
+              <li>Internal copilots grounded in your own operational data, with guardrails and audit trails</li>
+              <li>Decision-support systems tied to KPIs you already report on</li>
+              <li>Governance, logging, and rollback patterns defensible to auditors or regulators</li>
+            </ul>
+            <div class="avoid"><span class="tag">Avoid</span>Treating readiness as a green light to parallelize pilots. The leverage here is sequencing and integration, not breadth — one compounding build beats three standalone ones.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="rf">
+      <span class="brand">Nordglade · Operator Diagnostics</span>
+      <span class="folio">10</span>
+    </div>
+  </section>
+
+  <!-- ===================== AUTHOR'S NOTE ===================== -->
+  <section class="page" data-screen-label="11 Author's note">
+    <div class="rh">
+      <span>A note on honesty</span>
+      <span><span class="dot"></span>AI Readiness Assessment</span>
+    </div>
+
+    <div style="padding-top:18mm">
+      <div class="section-label"><span class="num">§</span>Closing</div>
+      <h2 class="note-title" style="margin-top:8mm">A note on <em style="font-family:var(--serif);font-style:italic;font-weight:400">honesty.</em></h2>
+
+      <div class="note">
+        <p>This assessment is both a diagnostic and a qualifier, and I'd rather be upfront about that than pretend it's neutral.</p>
+        <p>If you scored in the top band, you're likely a good fit for the work I do, and the next conversation should reflect that.</p>
+        <p>If you scored in the bottom band, the highest-leverage thing right now probably isn't a consulting engagement, it's one small, scoped win. If you reach out, that's what I'll tell you, and I'll point you at resources to run it yourself if that's the better path.</p>
+        <p>The goal is to be useful to you regardless of which side of that line you're on.</p>
+
+        <div class="sig">
+          <div class="sig-mark">Imre.</div>
+          <div class="sig-meta">
+            <span class="name">Imre Bartis</span>
+            I help green tech companies build AI into their operations.<br>
+            <a href="mailto:imre@nordglade.com">imre@nordglade.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rf">
+      <span class="brand">Nordglade · Operator Diagnostics</span>
+      <span class="folio">11</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ——————————————————————————————————————
+   Data
+—————————————————————————————————————— */
+const DIMENSIONS = [
+  {
+    n: "01",
+    title: "Problem Clarity",
+    max: 15,
+    epigraph: "Vague AI initiatives don't survive contact with reality. Specific ones do.",
+    questions: [
+      {
+        q: "Can you name one specific operational problem AI should solve?",
+        options: [
+          ["Not yet: we sense AI matters but haven't defined where", 1],
+          ["General area identified, no specific workflow or metric", 3],
+          ["Specific workflow, measurable outcome, named stakeholder", 5]
+        ]
+      },
+      {
+        q: "Is there real economic pressure behind this?",
+        options: [
+          ["No pressure, exploratory interest", 1],
+          ["Moderate: efficiency gains would matter", 3],
+          ["Real: cost, capacity, or revenue is visibly at stake", 5]
+        ]
+      },
+      {
+        q: "What does operational success look like 12 months from now?",
+        options: [
+          ["Not defined in concrete terms", 1],
+          ["Goals exist but aren't tied to specific operational changes", 3],
+          ["Clear targets, tied to metrics we already track", 5]
+        ]
+      }
+    ]
+  },
+  {
+    n: "02",
+    title: "Process Readiness",
+    max: 15,
+    epigraph: "AI lands on workflows. Unclear workflows can't absorb it.",
+    questions: [
+      {
+        q: "How repeatable are the tasks you'd target first?",
+        options: [
+          ["Every case is different; judgment-heavy throughout", 1],
+          ["Some patterns, significant variation", 3],
+          ["Clear pattern; exceptions are the minority", 5]
+        ]
+      },
+      {
+        q: "How well is this workflow documented?",
+        options: [
+          ["Lives in people's heads; works because specific people know it", 1],
+          ["Rough documentation, edge cases undocumented", 3],
+          ["Step-by-step documentation, including exception handling", 5]
+        ]
+      },
+      {
+        q: "Do you know where the workflow gets stuck?",
+        options: [
+          ["Delays surface reactively; no diagnostic visibility", 1],
+          ["Rough idea of bottlenecks, not systematically tracked", 3],
+          ["Bottlenecks and handoff points mapped and measured", 5]
+        ]
+      }
+    ]
+  },
+  {
+    n: "03",
+    title: "Data & Systems Fit",
+    max: 10,
+    epigraph: "For the specific problem, not in general.",
+    epigraphPlain: "Modern AI doesn't require a perfect data warehouse. It needs access to the right context for the task at hand. Score this dimension against the specific problem from Q1, not against a platonic ideal.",
+    questions: [
+      {
+        q: "Is the data AI would need for this specific problem accessible?",
+        options: [
+          ["It exists but is scattered across systems, inboxes, paper", 1],
+          ["Partially accessible, some pulling together required", 3],
+          ["Accessible in structured form where the work happens", 5]
+        ]
+      },
+      {
+        q: "When two systems disagree about the same record, who wins?",
+        options: [
+          ["No clear answer", 1],
+          ["Informal hierarchy, not documented", 3],
+          ["Documented source of truth for master data", 5]
+        ]
+      }
+    ]
+  },
+  {
+    n: "04",
+    title: "Team & Change Capacity",
+    max: 15,
+    epigraph: "This is the single strongest predictor of whether AI sticks.",
+    questions: [
+      {
+        q: "Who owns AI and automation decisions?",
+        options: [
+          ["No one specifically, ad hoc", 1],
+          ["Informally one person, no mandate or budget", 3],
+          ["Named owner with mandate and budget", 5]
+        ]
+      },
+      {
+        q: "What's your track record with adopting new operational tools in the last three years?",
+        options: [
+          ["Tools come in but often don't get used", 1],
+          ["Mixed: some stick, some don't", 3],
+          ["We've integrated new tools successfully, with measurable adoption", 5]
+        ]
+      },
+      {
+        q: "What's your team's current relationship with AI tools day-to-day?",
+        options: [
+          ["Untested or actively avoided", 1],
+          ["Individual experimentation, no shared practice", 3],
+          ["AI tools are part of standard workflows for multiple people", 5]
+        ]
+      }
+    ]
+  },
+  {
+    n: "05",
+    title: "Governance & Control",
+    max: 10,
+    epigraph: "AI you can't govern is a liability, not an asset.",
+    questions: [
+      {
+        q: "How does your organization approach AI integration with operational tools?",
+        options: [
+          ["We avoid it, too many unknowns", 1],
+          ["We'd explore it, but haven't defined what's in or out of bounds", 3],
+          ["We have clear boundaries for what AI can access, and we can work within them", 5]
+        ]
+      },
+      {
+        q: "Where does your operational data physically reside?",
+        options: [
+          ["Mixed or unknown, unclear data residency", 1],
+          ["Mostly EU-based, exceptions known", 3],
+          ["EU-based, GDPR-compliant, residency documented", 5]
+        ]
+      }
+    ],
+    regnote: "If your planned use cases involve automated decisions about people or quality outcomes — hiring, credit, supply chain scoring, manufacturing quality control — EU AI Act high-risk provisions apply from August 2026. Governance and documentation aren't optional at that point; they're regulatory."
+  },
+  {
+    n: "06",
+    title: "Automation Maturity",
+    max: 10,
+    epigraph: "Companies that have already done basic automation are orders of magnitude more ready than those that haven't.",
+    questions: [
+      {
+        q: "What automation tooling have you deployed before AI entered the conversation?",
+        options: [
+          ["None, manual or spreadsheet-based", 1],
+          ["Basic automations in one or two areas", 3],
+          ["Established automation layer across multiple workflows", 5]
+        ]
+      },
+      {
+        q: "If a workflow broke tomorrow, how would you diagnose it?",
+        options: [
+          ["Someone would dig through systems manually", 1],
+          ["Some logging exists, enough to ask the right questions", 3],
+          ["Workflows are monitored; failures surface with context", 5]
+        ]
+      }
+    ]
+  }
+];
+
+/* ——————————————————————————————————————
+   State
+—————————————————————————————————————— */
+const STORAGE_KEY = "nordglade_ai_readiness_v1";
+let state = loadState();
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {};
+}
+function saveState(){
+  try{localStorage.setItem(STORAGE_KEY, JSON.stringify(state))}catch(e){}
+}
+
+function qid(di, qi){ return "d"+di+"q"+qi; }
+
+/* ——————————————————————————————————————
+   Render: TOC
+—————————————————————————————————————— */
+function renderTOC(){
+  const el = document.getElementById("toc");
+  const pages = [
+    {n:"01", t:"Problem Clarity", sub:"3 questions · 15 pts", pg:"03"},
+    {n:"02", t:"Process Readiness", sub:"3 questions · 15 pts", pg:"04"},
+    {n:"03", t:"Data & Systems Fit", sub:"2 questions · 10 pts", pg:"05"},
+    {n:"04", t:"Team & Change Capacity", sub:"3 questions · 15 pts", pg:"06"},
+    {n:"05", t:"Governance & Control", sub:"2 questions · 10 pts", pg:"07"},
+    {n:"06", t:"Automation Maturity", sub:"2 questions · 10 pts", pg:"08"},
+    {n:"§",  t:"Results", sub:"Profile and total", pg:"09"},
+    {n:"§",  t:"What your score means", sub:"Bands and next steps", pg:"10"},
+    {n:"§",  t:"A note on honesty", sub:"Author's note", pg:"11"}
+  ];
+  el.innerHTML = pages.map(p => `
+    <div class="toc-item">
+      <div class="toc-n">${p.n}</div>
+      <div class="toc-t">${p.t}</div>
+      <div class="toc-sub">${p.sub}</div>
+      <div class="toc-pg">${p.pg}</div>
+    </div>
+  `).join("");
+}
+
+/* ——————————————————————————————————————
+   Render: Dimension pages
+—————————————————————————————————————— */
+function renderDimensions(){
+  const host = document.getElementById("dimensions");
+  let qCounter = 0;
+  const pages = DIMENSIONS.map((dim, di) => {
+    const folio = String(3 + di).padStart(2,"0");
+
+    const questionsHTML = dim.questions.map((q, qi) => {
+      qCounter += 1;
+      const id = qid(di, qi);
+      return `
+        <div class="q">
+          <div class="q-head">
+            <div class="q-num">Q${String(qCounter).padStart(2,"0")}</div>
+            <div class="q-text">${q.q}</div>
+          </div>
+          <div class="options" role="radiogroup" data-q="${id}">
+            ${q.options.map((opt, oi) => `
+              <div class="opt" role="radio" tabindex="0" data-q="${id}" data-oi="${oi}" data-pts="${opt[1]}">
+                <span class="mark" aria-hidden="true"></span>
+                <span class="opt-label">${opt[0]}</span>
+                <span class="opt-pts">${opt[1]} pt${opt[1]===1?".":"s."}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    const epigraphBlock = dim.epigraphPlain
+      ? `<div class="epigraph">${dim.epigraph}</div><p class="lede" style="margin:-6mm 0 10mm;font-size:10.5pt;color:var(--ink-3);max-width:58ch">${dim.epigraphPlain}</p>`
+      : `<div class="epigraph">${dim.epigraph}</div>`;
+
+    const regnoteBlock = dim.regnote
+      ? `<div class="regnote"><span class="rtag">EU AI Act note</span>${dim.regnote}</div>`
+      : "";
+
+    return `
+      <section class="page" data-screen-label="${String(2+di+1).padStart(2,"0")} ${dim.title}" data-dim="${di}">
+        <div class="rh">
+          <span>Dimension ${dim.n} · ${dim.title}</span>
+          <span><span class="dot"></span>AI Readiness Assessment</span>
+        </div>
+
+        <div style="padding-top:14mm">
+          <div class="dim-head">
+            <div class="left">
+              <div class="dim-number">Dimension<span class="sep">·</span>${dim.n}</div>
+              <div class="dim-title">${dim.title}</div>
+            </div>
+            <div class="dim-max"><span class="cur" data-dim-cur="${di}">—</span> / ${dim.max} pts.</div>
+          </div>
+
+          ${epigraphBlock}
+
+          ${questionsHTML}
+
+          <div class="dim-total">
+            <div class="lbl">${dim.title} total</div>
+            <div class="val"><span data-dim-cur-big="${di}">—</span><span class="slash">/</span><span class="max">${dim.max}</span></div>
+          </div>
+
+          ${regnoteBlock}
+        </div>
+
+        <div class="rf">
+          <span class="brand">Nordglade · Operator Diagnostics</span>
+          <span class="folio">${folio}</span>
+        </div>
+      </section>
+    `;
+  }).join("");
+  host.innerHTML = pages;
+}
+
+/* ——————————————————————————————————————
+   Interactions
+—————————————————————————————————————— */
+function attachOptionHandlers(){
+  document.querySelectorAll(".opt").forEach(el => {
+    el.addEventListener("click", () => selectOption(el));
+    el.addEventListener("keydown", e => {
+      if(e.key === " " || e.key === "Enter"){ e.preventDefault(); selectOption(el); }
+    });
+  });
+}
+
+function selectOption(el){
+  const qKey = el.dataset.q;
+  const pts = parseInt(el.dataset.pts, 10);
+  const oi = parseInt(el.dataset.oi, 10);
+  // clear siblings
+  document.querySelectorAll(`.opt[data-q="${qKey}"]`).forEach(sib => sib.classList.remove("selected"));
+  el.classList.add("selected");
+  state[qKey] = { pts, oi };
+  saveState();
+  updateScores();
+}
+
+function applyStateToDOM(){
+  Object.entries(state).forEach(([qKey, v]) => {
+    const el = document.querySelector(`.opt[data-q="${qKey}"][data-oi="${v.oi}"]`);
+    if(el) el.classList.add("selected");
+  });
+}
+
+/* ——————————————————————————————————————
+   Scoring
+—————————————————————————————————————— */
+function scoreDimension(di){
+  const dim = DIMENSIONS[di];
+  let total = 0;
+  let any = false;
+  dim.questions.forEach((q, qi) => {
+    const v = state[qid(di, qi)];
+    if(v){ total += v.pts; any = true; }
+  });
+  return { total, any, max: dim.max };
+}
+
+function updateScores(){
+  let grand = 0;
+  let anyAny = false;
+  const dimScores = DIMENSIONS.map((_, di) => {
+    const s = scoreDimension(di);
+    if(s.any) anyAny = true;
+    grand += s.total;
+    // per-dimension displays
+    const cur = document.querySelector(`[data-dim-cur="${di}"]`);
+    const curBig = document.querySelector(`[data-dim-cur-big="${di}"]`);
+    const show = s.any ? s.total : "—";
+    if(cur) cur.textContent = show;
+    if(curBig) curBig.textContent = show;
+    return s;
+  });
+  renderScoreTable(dimScores, grand, anyAny);
+  renderRadar(dimScores);
+  renderBandActive(grand, anyAny);
+}
+
+function renderScoreTable(dimScores, grand, anyAny){
+  const rows = DIMENSIONS.map((dim, di) => {
+    const s = dimScores[di];
+    const pct = s.any ? (s.total / s.max) : 0;
+    return `
+      <tr>
+        <td class="dim-n">${dim.n}</td>
+        <td>${dim.title}</td>
+        <td class="bar-cell"><div class="bar"><div class="fill" style="width:${(pct*100).toFixed(1)}%"></div></div></td>
+        <td class="val-cell">${s.any ? s.total : "—"}<span class="m">/ ${dim.max}</span></td>
+      </tr>
+    `;
+  }).join("");
+  const totalRow = `
+    <tr class="total">
+      <td></td>
+      <td>Total</td>
+      <td class="bar-cell"><div class="bar"><div class="fill" style="width:${(anyAny?grand/75*100:0).toFixed(1)}%"></div></div></td>
+      <td class="val-cell">${anyAny ? grand : "—"}<span class="m">/ 75</span></td>
+    </tr>
+  `;
+  document.getElementById("score-rows").innerHTML = rows + totalRow;
+}
+
+/* ——————————————————————————————————————
+   Radar
+—————————————————————————————————————— */
+function renderRadar(dimScores){
+  const svg = document.getElementById("radar");
+  const R = 80;
+  const N = DIMENSIONS.length;
+  const angle = i => (Math.PI * 2 * i / N) - Math.PI/2;
+  const pt = (i, r) => [Math.cos(angle(i))*r, Math.sin(angle(i))*r];
+
+  // grid rings
+  const rings = [0.25, 0.5, 0.75, 1].map(f => {
+    const pts = Array.from({length:N}, (_,i) => pt(i, R*f).map(v=>v.toFixed(2)).join(",")).join(" ");
+    return `<polygon points="${pts}" fill="none" stroke="var(--rule)" stroke-width="0.5" />`;
+  }).join("");
+
+  // spokes
+  const spokes = Array.from({length:N}, (_,i) => {
+    const [x,y] = pt(i, R);
+    return `<line x1="0" y1="0" x2="${x.toFixed(2)}" y2="${y.toFixed(2)}" stroke="var(--rule-2)" stroke-width="0.5" />`;
+  }).join("");
+
+  // axis labels
+  const labels = DIMENSIONS.map((d, i) => {
+    const [x,y] = pt(i, R + 14);
+    let anchor = "middle";
+    if(x > 2) anchor = "start";
+    else if(x < -2) anchor = "end";
+    return `<text x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="${anchor}" dominant-baseline="middle"
+      font-family="IBM Plex Mono, monospace" font-size="6.2" fill="var(--ink-3)" letter-spacing="0.06em">${d.n}</text>`;
+  }).join("");
+
+  const nameLabels = DIMENSIONS.map((d, i) => {
+    const [x,y] = pt(i, R + 22);
+    let anchor = "middle";
+    if(x > 2) anchor = "start";
+    else if(x < -2) anchor = "end";
+    const short = d.title.replace("Team & Change Capacity","Team & Change").replace("Data & Systems Fit","Data & Systems").replace("Governance & Control","Governance").replace("Automation Maturity","Automation").replace("Problem Clarity","Problem").replace("Process Readiness","Process");
+    return `<text x="${x.toFixed(2)}" y="${y.toFixed(2)}" text-anchor="${anchor}" dominant-baseline="middle"
+      font-family="Inter Tight, sans-serif" font-size="6.4" fill="var(--ink)" font-weight="500">${short}</text>`;
+  }).join("");
+
+  // data polygon
+  const dataPts = dimScores.map((s, i) => {
+    const f = s.any ? Math.max(0.02, s.total / s.max) : 0;
+    return pt(i, R*f).map(v=>v.toFixed(2)).join(",");
+  }).join(" ");
+
+  // data points
+  const dots = dimScores.map((s, i) => {
+    if(!s.any) return "";
+    const f = s.total / s.max;
+    const [x,y] = pt(i, R*f);
+    return `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="1.6" fill="var(--accent)" />`;
+  }).join("");
+
+  svg.innerHTML = `
+    ${rings}
+    ${spokes}
+    ${dataPts ? `<polygon points="${dataPts}" fill="var(--accent)" fill-opacity="0.16" stroke="var(--accent)" stroke-width="1.1" stroke-linejoin="round"/>` : ""}
+    ${dots}
+    ${labels}
+    ${nameLabels}
+  `;
+}
+
+/* ——————————————————————————————————————
+   Bands
+—————————————————————————————————————— */
+function renderBandActive(grand, anyAny){
+  document.querySelectorAll(".band").forEach(b => b.classList.remove("active"));
+  const hint = document.getElementById("bands-hint");
+  const hintText = document.getElementById("bands-hint-text");
+  const totalQ = DIMENSIONS.reduce((s, d) => s + d.questions.length, 0);
+  const answered = Object.keys(state).length;
+  const threshold = Math.ceil(totalQ * 0.8);
+  if(answered < threshold){
+    if(hint) hint.style.display = "block";
+    if(hintText) hintText.textContent = `Answer at least ${threshold} of ${totalQ} questions to see which band fits you (${answered} answered).`;
+    return;
+  }
+  if(hint) hint.style.display = "none";
+  let pick;
+  if(grand <= 25) pick = "0-25";
+  else if(grand <= 51) pick = "26-51";
+  else pick = "52-75";
+  const el = document.querySelector(`.band[data-range="${pick}"]`);
+  if(el) el.classList.add("active");
+}
+
+/* ——————————————————————————————————————
+   Reset / Print
+—————————————————————————————————————— */
+document.getElementById("btn-reset").addEventListener("click", () => {
+  state = {};
+  saveState();
+  document.querySelectorAll(".opt.selected").forEach(el => el.classList.remove("selected"));
+  updateScores();
+});
+document.getElementById("btn-print").addEventListener("click", () => {
+  window.print();
+});
+
+/* ——————————————————————————————————————
+   Init
+—————————————————————————————————————— */
+renderTOC();
+renderDimensions();
+attachOptionHandlers();
+applyStateToDOM();
+updateScores();
+</script>
+</body>
+</html>

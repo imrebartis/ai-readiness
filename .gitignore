@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.sublime-workspace
+
+# Env
+.env*
+
+# Hosting
+.vercel
+
+# Tools
+.qodo
