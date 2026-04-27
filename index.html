@@ -570,7 +570,7 @@
 
   /* ——— score bands ——— */
   .bands{
-    margin-top:8mm;
+    margin-top:14mm;
     display:grid;
     grid-template-columns:1fr;
     gap:0;
@@ -579,7 +579,7 @@
     display:grid;
     grid-template-columns:90px 1fr;
     gap:20px;
-    padding:5mm 0;
+    padding:7mm 0;
     border-top:1px solid var(--rule);
     position:relative;
   }
@@ -661,8 +661,8 @@
 
   /* ——— free-text prompt ——— */
   .freetext{
-    margin-top:6mm;
-    padding-top:5mm;
+    margin-top:10mm;
+    padding-top:8mm;
     border-top:1px solid var(--rule);
   }
   .freetext-label{
@@ -731,26 +731,26 @@
 
   /* ——— author's note ——— */
   .note{
-    padding:6mm 0 0;
+    padding:10mm 0 0;
   }
   .note-title{
     font-family:var(--sans);
     font-weight:400;
     font-size:22pt;
     letter-spacing:-0.025em;
-    margin-bottom:6mm;
+    margin-bottom:8mm;
   }
   .note p{
     font-family:var(--serif);
     font-size:11pt;
-    line-height:1.55;
+    line-height:1.6;
     color:var(--ink-2);
     max-width:58ch;
-    margin:0 0 3mm;
+    margin:0 0 4mm;
   }
   .sig{
-    margin-top:6mm;
-    padding-top:5mm;
+    margin-top:10mm;
+    padding-top:8mm;
     border-top:1px solid var(--rule);
     display:grid;
     grid-template-columns:auto 1fr;
@@ -988,7 +988,7 @@
     </div>
   </section>
 
-  <!-- ===================== BANDS ===================== -->
+  <!-- ===================== BANDS (part 1) ===================== -->
   <section class="page" data-screen-label="10 Score bands">
     <div class="rh">
       <span>What your score means</span>
@@ -1005,7 +1005,7 @@
       <span id="bands-hint-text">Answer more questions to see which band fits you.</span>
     </div>
 
-    <div class="bands" id="bands">
+    <div class="bands">
 
       <div class="band" data-range="0-25">
         <div class="band-active-flag">Your band →</div>
@@ -1038,6 +1038,27 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="rf">
+      <span class="brand">Nordglade · Operator Diagnostics</span>
+      <span class="folio">10</span>
+    </div>
+  </section>
+
+  <!-- ===================== BANDS (part 2) ===================== -->
+  <section class="page" data-screen-label="11 Score bands (cont.)">
+    <div class="rh">
+      <span>What your score means · cont.</span>
+      <span><span class="dot"></span>AI Readiness Assessment</span>
+    </div>
+
+    <div style="padding-top:18mm">
+      <div class="section-label"><span class="num">§</span>Interpretation · continued</div>
+    </div>
+
+    <div class="bands" style="margin-top:8mm">
+
       <div class="band" data-range="52-75">
         <div class="band-active-flag">Your band →</div>
         <div class="band-range">52 – 75</div>
@@ -1061,20 +1082,20 @@
 
     <div class="rf">
       <span class="brand">Nordglade · Operator Diagnostics</span>
-      <span class="folio">10</span>
+      <span class="folio">11</span>
     </div>
   </section>
 
   <!-- ===================== AUTHOR'S NOTE ===================== -->
-  <section class="page" data-screen-label="11 Author's note">
+  <section class="page" data-screen-label="12 Author's note">
     <div class="rh">
       <span>A note on honesty</span>
       <span><span class="dot"></span>AI Readiness Assessment</span>
     </div>
 
-    <div style="padding-top:14mm">
+    <div style="padding-top:18mm">
       <div class="section-label"><span class="num">§</span>Closing</div>
-      <h2 class="note-title" style="margin-top:6mm">A note on <em style="font-family:var(--serif);font-style:italic;font-weight:400">honesty.</em></h2>
+      <h2 class="note-title" style="margin-top:8mm">A note on <em style="font-family:var(--serif);font-style:italic;font-weight:400">honesty.</em></h2>
 
       <div class="note">
         <p>This assessment is both a diagnostic and a qualifier, and I'd rather be upfront about that than pretend it's neutral.</p>
@@ -1104,7 +1125,7 @@
 
     <div class="rf">
       <span class="brand">Nordglade · Operator Diagnostics</span>
-      <span class="folio">11</span>
+      <span class="folio">12</span>
     </div>
   </section>
 
@@ -1358,8 +1379,8 @@ function renderTOC(){
     {n:"05", t:"Governance & Control", sub:"2 questions · 10 pts", pg:"07"},
     {n:"06", t:"Automation Maturity", sub:"2 questions · 10 pts", pg:"08"},
     {n:"§",  t:"Results", sub:"Profile and total", pg:"09"},
-    {n:"§",  t:"What your score means", sub:"Bands and next steps", pg:"10"},
-    {n:"§",  t:"A note on honesty", sub:"Author's note", pg:"11"}
+    {n:"§",  t:"What your score means", sub:"Bands and next steps", pg:"10–11"},
+    {n:"§",  t:"A note on honesty", sub:"Author's note", pg:"12"}
   ];
   el.innerHTML = pages.map(p => `
     <div class="toc-item">
