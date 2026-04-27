@@ -38,7 +38,7 @@ The band on the results page only activates once at least 80% of questions (12 o
 
 ## Customising
 
-All content lives in [AI Readiness Assessment.html](AI%20Readiness%20Assessment.html). The notable hooks:
+All content lives in [index.html](index.html). The notable hooks:
 
 - **Dimensions and questions** — the `DIMENSIONS` array in the `<script>` block. Each entry has a title, a max score, an epigraph, and an array of questions with `[label, points]` tuples. Adding or removing questions automatically updates the radar, score table, totals, and band threshold.
 - **Bands** — the three `<div class="band">` blocks on the interpretation page. Update thresholds in `renderBandActive()` if you change totals.
