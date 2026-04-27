@@ -481,7 +481,7 @@
     grid-template-columns:1fr 1fr;
     gap:14mm;
     align-items:start;
-    padding-top:6mm;
+    padding-top:4mm;
   }
   .score-table{
     width:100%;
@@ -556,7 +556,7 @@
   }
   .radar{
     width:100%;
-    max-width:280px;
+    max-width:260px;
     aspect-ratio:1/1;
   }
   .radar-caption{
@@ -570,7 +570,7 @@
 
   /* ——— score bands ——— */
   .bands{
-    margin-top:14mm;
+    margin-top:8mm;
     display:grid;
     grid-template-columns:1fr;
     gap:0;
@@ -579,7 +579,7 @@
     display:grid;
     grid-template-columns:90px 1fr;
     gap:20px;
-    padding:7mm 0;
+    padding:5mm 0;
     border-top:1px solid var(--rule);
     position:relative;
   }
@@ -661,8 +661,8 @@
 
   /* ——— free-text prompt ——— */
   .freetext{
-    margin-top:10mm;
-    padding-top:8mm;
+    margin-top:6mm;
+    padding-top:5mm;
     border-top:1px solid var(--rule);
   }
   .freetext-label{
@@ -731,26 +731,26 @@
 
   /* ——— author's note ——— */
   .note{
-    padding:10mm 0 0;
+    padding:6mm 0 0;
   }
   .note-title{
     font-family:var(--sans);
     font-weight:400;
     font-size:22pt;
     letter-spacing:-0.025em;
-    margin-bottom:8mm;
+    margin-bottom:6mm;
   }
   .note p{
     font-family:var(--serif);
     font-size:11pt;
-    line-height:1.6;
+    line-height:1.55;
     color:var(--ink-2);
     max-width:58ch;
-    margin:0 0 4mm;
+    margin:0 0 3mm;
   }
   .sig{
-    margin-top:10mm;
-    padding-top:8mm;
+    margin-top:6mm;
+    padding-top:5mm;
     border-top:1px solid var(--rule);
     display:grid;
     grid-template-columns:auto 1fr;
@@ -850,7 +850,7 @@
       break-after:page;
       overflow:hidden;
     }
-    .page:last-child{page-break-after:auto}
+    .page:last-child{page-break-after:auto;break-after:avoid}
     .opt{-webkit-print-color-adjust:exact;print-color-adjust:exact}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   }
@@ -1072,9 +1072,9 @@
       <span><span class="dot"></span>AI Readiness Assessment</span>
     </div>
 
-    <div style="padding-top:18mm">
+    <div style="padding-top:14mm">
       <div class="section-label"><span class="num">§</span>Closing</div>
-      <h2 class="note-title" style="margin-top:8mm">A note on <em style="font-family:var(--serif);font-style:italic;font-weight:400">honesty.</em></h2>
+      <h2 class="note-title" style="margin-top:6mm">A note on <em style="font-family:var(--serif);font-style:italic;font-weight:400">honesty.</em></h2>
 
       <div class="note">
         <p>This assessment is both a diagnostic and a qualifier, and I'd rather be upfront about that than pretend it's neutral.</p>
@@ -1570,7 +1570,7 @@ function renderRadar(dimScores){
   }).join("");
 
   const nameLabels = DIMENSIONS.map((d, i) => {
-    const [x,y] = pt(i, R + 22);
+    const [x,y] = pt(i, R + 18);
     let anchor = "middle";
     if(x > 2) anchor = "start";
     else if(x < -2) anchor = "end";
