@@ -659,6 +659,76 @@
   }
   .band.active .band-active-flag{display:block}
 
+  /* ——— free-text prompt ——— */
+  .freetext{
+    margin-top:10mm;
+    padding-top:8mm;
+    border-top:1px solid var(--rule);
+  }
+  .freetext-label{
+    font-family:var(--mono);
+    font-size:8.5pt;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:block;
+    margin-bottom:3mm;
+  }
+  .freetext-prompt{
+    font-family:var(--serif);
+    font-size:12pt;
+    line-height:1.5;
+    color:var(--ink-2);
+    margin:0 0 4mm;
+    max-width:58ch;
+  }
+  .freetext-hint{
+    font-family:var(--sans);
+    font-size:9pt;
+    color:var(--ink-4);
+    margin:0 0 4mm;
+  }
+  .freetext textarea{
+    width:100%;
+    min-height:32mm;
+    padding:4mm;
+    font-family:var(--sans);
+    font-size:10.5pt;
+    line-height:1.5;
+    color:var(--ink);
+    background:#FFFEFA;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    resize:vertical;
+    outline:none;
+    transition:border-color .15s ease;
+  }
+  .freetext textarea:focus{border-color:var(--accent)}
+  .freetext-disclosure{
+    margin:3mm 0 0;
+    font-family:var(--mono);
+    font-size:8pt;
+    letter-spacing:0.04em;
+    color:var(--ink-4);
+  }
+  .freetext-print{
+    display:none;
+    padding:4mm;
+    border:1px solid var(--rule);
+    background:#FFFEFA;
+    font-family:var(--sans);
+    font-size:10.5pt;
+    line-height:1.5;
+    color:var(--ink);
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    min-height:32mm;
+  }
+  @media print{
+    .freetext textarea{display:none}
+    .freetext-print{display:block}
+  }
+
   /* ——— author's note ——— */
   .note{
     padding:10mm 0 0;
@@ -867,6 +937,10 @@
         <div class="k">Output</div>
         <div class="v">Six dimension scores, one total, and a band you can act on.</div>
       </div>
+      <div class="intro-grid">
+        <div class="k">When done</div>
+        <div class="v">Hit <strong>Save as PDF</strong> in the top right and reply to my email with it attached. That way we use the 30 minutes on what's actually relevant to you, not on questions I could have answered ahead of time.</div>
+      </div>
 
       <div class="section-label" style="margin-top:14mm"><span class="num">§</span>Contents</div>
       <div class="toc" id="toc"></div>
@@ -939,7 +1013,7 @@
         <div>
           <div class="band-title">Start with one bounded use case.</div>
           <div class="band-body">
-            <p>You're not ready for integrated AI systems, but you are ready for a single well-scoped automation that produces visible value in 2–4 weeks. The goal at this stage isn't to transform operations. It's to build one proof point your team can see and trust.</p>
+            <p>Based on this profile, the realistic first engagement looks like a single well-scoped automation that produces visible value in 2–4 weeks — one proof point your team can see and trust, before anything more ambitious. Let's get into specifics on the call.</p>
             <p style="margin-top:4mm;font-family:var(--sans);font-size:10pt;color:var(--ink-3)">Concrete starting points at this level:</p>
             <ul>
               <li>Meeting notes → structured follow-ups and action items</li>
@@ -947,7 +1021,7 @@
               <li>Document summarization for specific recurring workflows</li>
               <li>Standardized responses to frequent customer questions</li>
             </ul>
-            <div class="avoid"><span class="tag">Avoid</span>Buying platform tooling, running multiple pilots in parallel, or committing to ambitious integrations before the first small win lands.</div>
+            <div class="avoid"><span class="tag">What we'll talk about</span>How to pick the first use case, why platform tooling and parallel pilots are the wrong move at this stage, and what the first win needs to look like for the next one to be easier.</div>
           </div>
         </div>
       </div>
@@ -958,8 +1032,8 @@
         <div>
           <div class="band-title">Ready for targeted pilots.</div>
           <div class="band-body">
-            <p>You have enough foundation to run focused AI work in one or two areas with measurable outcomes. The leverage here is in picking the right starting point: repeatable process, accessible data, clear stakeholder, and instrumenting it well enough to know whether it worked.</p>
-            <div class="avoid"><span class="tag">Avoid</span>Broad “AI strategy” engagements. They're slower and less convincing than one pilot that ships and shows numbers.</div>
+            <p>Based on this profile, the realistic first engagement is focused AI work in one or two areas with measurable outcomes. The leverage is in picking the right starting point — repeatable process, accessible data, clear stakeholder, instrumented well enough to know whether it worked. Let's get into specifics on the call.</p>
+            <div class="avoid"><span class="tag">What we'll talk about</span>Which one or two pilots have the cleanest path to a measurable result, why a broad "AI strategy" engagement would slow you down here, and what "instrumented well enough" actually means in your context.</div>
           </div>
         </div>
       </div>
@@ -970,7 +1044,7 @@
         <div>
           <div class="band-title">Ready for systematic adoption.</div>
           <div class="band-body">
-            <p>You have the foundations to build AI into operations as an integrated layer, not as a collection of standalone tools. At this level the question shifts from “does AI help?” to “which sequence of integrations compounds fastest?”</p>
+            <p>Based on this profile, the realistic first engagement is building AI into operations as an integrated layer rather than a collection of standalone tools. At this level the question shifts from "does AI help?" to "which sequence of integrations compounds fastest?" Let's get into specifics on the call.</p>
             <p style="margin-top:4mm;font-family:var(--sans);font-size:10pt;color:var(--ink-3)">Engagements at this level typically look like:</p>
             <ul>
               <li>End-to-end workflow integration across two or more systems</li>
@@ -978,7 +1052,7 @@
               <li>Decision-support systems tied to KPIs you already report on</li>
               <li>Governance, logging, and rollback patterns defensible to auditors or regulators</li>
             </ul>
-            <div class="avoid"><span class="tag">Avoid</span>Treating readiness as a green light to parallelize pilots. The leverage here is sequencing and integration, not breadth — one compounding build beats three standalone ones.</div>
+            <div class="avoid"><span class="tag">What we'll talk about</span>How to sequence the integrations so each one makes the next easier, why parallelizing pilots wastes the advantage you've built, and where governance needs to be load-bearing rather than cosmetic.</div>
           </div>
         </div>
       </div>
@@ -1007,6 +1081,15 @@
         <p>If you scored in the top band, you're likely a good fit for the work I do, and the next conversation should reflect that.</p>
         <p>If you scored in the bottom band, the highest-leverage thing right now probably isn't a consulting engagement, it's one small, scoped win. If you reach out, that's what I'll tell you, and I'll point you at resources to run it yourself if that's the better path.</p>
         <p>The goal is to be useful to you regardless of which side of that line you're on.</p>
+
+        <div class="freetext">
+          <span class="freetext-label">Optional · for call prep</span>
+          <p class="freetext-prompt">Anything specific you want me to look at before the call?</p>
+          <p class="freetext-hint">A workflow, a deadline, a person who blocks decisions, a system that doesn't behave — whatever the radio buttons couldn't capture. Optional. It saves on the call.</p>
+          <textarea id="freetext-input" rows="5" maxlength="8000" placeholder="Type here, then Save as PDF and send it back."></textarea>
+          <p class="freetext-disclosure">Saved on this device only — nothing is sent until you email the PDF.</p>
+          <div class="freetext-print" id="freetext-print" aria-hidden="true"></div>
+        </div>
 
         <div class="sig">
           <div class="sig-mark">Imre.</div>
@@ -1207,18 +1290,57 @@ const DIMENSIONS = [
 /* ——————————————————————————————————————
    State
 —————————————————————————————————————— */
-const STORAGE_KEY = "nordglade_ai_readiness_v1";
+const STORAGE_KEY = "nordglade_ai_readiness_v2";
+const LEGACY_KEYS = ["nordglade_ai_readiness_v1", "nordglade_ai_readiness_freetext_v1"];
 let state = loadState();
+
+function emptyState(){ return { answers: {}, freetext: "" }; }
 
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
-  }catch(e){}
-  return {};
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(parsed && typeof parsed === "object"){
+        return {
+          answers: (parsed.answers && typeof parsed.answers === "object") ? parsed.answers : {},
+          freetext: typeof parsed.freetext === "string" ? parsed.freetext : ""
+        };
+      }
+    }
+    // one-time migration from v1 split keys
+    const legacyAnswersRaw = localStorage.getItem(LEGACY_KEYS[0]);
+    const legacyFreetext = localStorage.getItem(LEGACY_KEYS[1]) || "";
+    if(legacyAnswersRaw || legacyFreetext){
+      const legacyAnswers = legacyAnswersRaw ? JSON.parse(legacyAnswersRaw) : {};
+      LEGACY_KEYS.forEach(k => { try{ localStorage.removeItem(k); }catch(e){} });
+      return { answers: legacyAnswers || {}, freetext: legacyFreetext };
+    }
+  }catch(e){
+    console.warn("Nordglade: corrupted saved state, starting fresh.", e);
+  }
+  return emptyState();
 }
+
+let saveTimer = null;
 function saveState(){
-  try{localStorage.setItem(STORAGE_KEY, JSON.stringify(state))}catch(e){}
+  if(saveTimer) return;
+  saveTimer = setTimeout(() => {
+    saveTimer = null;
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }catch(e){
+      console.warn("Nordglade: could not persist state (storage full or blocked).", e);
+    }
+  }, 200);
+}
+function saveStateNow(){
+  if(saveTimer){ clearTimeout(saveTimer); saveTimer = null; }
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){
+    console.warn("Nordglade: could not persist state (storage full or blocked).", e);
+  }
 }
 
 function qid(di, qi){ return "d"+di+"q"+qi; }
@@ -1345,13 +1467,13 @@ function selectOption(el){
   // clear siblings
   document.querySelectorAll(`.opt[data-q="${qKey}"]`).forEach(sib => sib.classList.remove("selected"));
   el.classList.add("selected");
-  state[qKey] = { pts, oi };
+  state.answers[qKey] = { pts, oi };
   saveState();
   updateScores();
 }
 
 function applyStateToDOM(){
-  Object.entries(state).forEach(([qKey, v]) => {
+  Object.entries(state.answers).forEach(([qKey, v]) => {
     const el = document.querySelector(`.opt[data-q="${qKey}"][data-oi="${v.oi}"]`);
     if(el) el.classList.add("selected");
   });
@@ -1365,7 +1487,7 @@ function scoreDimension(di){
   let total = 0;
   let any = false;
   dim.questions.forEach((q, qi) => {
-    const v = state[qid(di, qi)];
+    const v = state.answers[qid(di, qi)];
     if(v){ total += v.pts; any = true; }
   });
   return { total, any, max: dim.max };
@@ -1489,7 +1611,7 @@ function renderBandActive(grand, anyAny){
   const hint = document.getElementById("bands-hint");
   const hintText = document.getElementById("bands-hint-text");
   const totalQ = DIMENSIONS.reduce((s, d) => s + d.questions.length, 0);
-  const answered = Object.keys(state).length;
+  const answered = Object.keys(state.answers).length;
   const threshold = Math.ceil(totalQ * 0.8);
   if(answered < threshold){
     if(hint) hint.style.display = "block";
@@ -1508,10 +1630,34 @@ function renderBandActive(grand, anyAny){
 /* ——————————————————————————————————————
    Reset / Print
 —————————————————————————————————————— */
+const freetextEl = document.getElementById("freetext-input");
+const freetextPrintEl = document.getElementById("freetext-print");
+function syncFreetextPrint(){
+  if(freetextPrintEl) freetextPrintEl.textContent = freetextEl ? freetextEl.value : "";
+}
+if(freetextEl){
+  freetextEl.value = state.freetext || "";
+  syncFreetextPrint();
+  freetextEl.addEventListener("input", () => {
+    state.freetext = freetextEl.value;
+    syncFreetextPrint();
+    saveState();
+  });
+}
+window.addEventListener("beforeprint", () => {
+  saveStateNow();
+  syncFreetextPrint();
+});
+
 document.getElementById("btn-reset").addEventListener("click", () => {
-  state = {};
-  saveState();
+  const hasAnswers = Object.keys(state.answers).length > 0;
+  const hasFreetext = !!(state.freetext && state.freetext.trim());
+  if((hasAnswers || hasFreetext) && !confirm("Clear all answers" + (hasFreetext ? " and your note" : "") + "? This can't be undone.")) return;
+  state = emptyState();
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
   document.querySelectorAll(".opt.selected").forEach(el => el.classList.remove("selected"));
+  if(freetextEl) freetextEl.value = "";
+  syncFreetextPrint();
   updateScores();
 });
 document.getElementById("btn-print").addEventListener("click", () => {
